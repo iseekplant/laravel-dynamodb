@@ -15,8 +15,6 @@ class DynamoDbServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        DynamoDbModel::setDynamoDbClientService($this->app->make(DynamoDbClientInterface::class));
-
         $this->publishes([
             __DIR__.'/../config/dynamodb.php' => app()->basePath('config/dynamodb.php'),
         ]);

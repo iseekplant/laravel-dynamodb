@@ -69,6 +69,8 @@ abstract class DynamoDbModel extends Model
 
     public function __construct(array $attributes = [])
     {
+        static::setDynamoDbClientService(app(DynamoDbClientInterface::class));
+        
         $this->bootIfNotBooted();
 
         $this->syncOriginal();
