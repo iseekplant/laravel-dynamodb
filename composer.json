@@ -1,5 +1,5 @@
 {
-  "name": "baopham/dynamodb",
+  "name": "iseekplant/dynamodb",
   "description": "Eloquent syntax for DynamoDB",
   "keywords": [
     "laravel",
