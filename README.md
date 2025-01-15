@@ -1,12 +1,25 @@
 laravel-dynamodb
 ================
 
-[![Latest Stable Version](https://poser.pugx.org/baopham/dynamodb/v/stable)](https://packagist.org/packages/baopham/dynamodb)
-[![Total Downloads](https://poser.pugx.org/baopham/dynamodb/downloads)](https://packagist.org/packages/baopham/dynamodb)
-[![Latest Unstable Version](https://poser.pugx.org/baopham/dynamodb/v/unstable)](https://packagist.org/packages/baopham/dynamodb)
-[![Build Status](https://travis-ci.org/baopham/laravel-dynamodb.svg?branch=master)](https://travis-ci.org/baopham/laravel-dynamodb)
-[![Code Coverage](https://scrutinizer-ci.com/g/baopham/laravel-dynamodb/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/baopham/laravel-dynamodb/?branch=master)
-[![License](https://poser.pugx.org/baopham/dynamodb/license)](https://packagist.org/packages/baopham/dynamodb)
+## Iseekplant Fork 
+
+When using the AWS sdk credential provider the `config:cache` command will fail due to the credential provider returning a closure. This is unavoidable when deploying vapor because `config:cache` is run when the runtime boots the application.
+
+The config can be set dynamically before resolving the client.
+
+```PHP
+$this->app->beforeResolving(
+    DynamoDbClientInterface::class, 
+    fn () => config()->set('dynamodb.connections.default.credentials', CredentialProvider::chain(
+        CredentialProvider::sso('production'),
+        CredentialProvider::defaultProvider(),
+    ))
+);
+```
+
+but in order for this to work the packge had to be modified to resolve the client when a model is instantiated instead of at boot [fb669b5](https://github.com/iseekplant/laravel-dynamodb/commit/cb33b7b3a46b8c6feac083728d2ac380fe800e99)
+
+---
 
 Supports all key types - primary hash key and composite keys.
 
